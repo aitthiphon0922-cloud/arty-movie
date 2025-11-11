@@ -3,7 +3,7 @@ export default function Header({ onNavigate, user, onConnect }) {
     <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white py-4">
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <div className="text-2xl font-bold cursor-pointer" onClick={() => onNavigate('home')}>MyCryptoFlix</div>
+          <div className="text-2xl font-bold cursor-pointer" onClick={() => onNavigate('home')}>BlackKeyFlix</div>
           <nav className="hidden md:flex gap-4 text-gray-300">
             <button onClick={() => onNavigate('home')}>Home</button>
             <button onClick={() => onNavigate('categories')}>หมวดหมู่</button>
