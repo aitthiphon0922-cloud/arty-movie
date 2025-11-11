@@ -4,6 +4,8 @@ import Header from '../components/Header'
 const MOCK_MOVIES = [
   { id: 1, title: 'Moon Warrior', year: 2025, price_usdc: 3, duration: '1h 48m' },
   { id: 2, title: 'Lost in Space', year: 2023, price_usdc: 2.5, duration: '2h 01m' },
+  { id: 3, title: 'ล่าข้ามจักรวาล', year: 2024, price_usdc: 4, duration: '2h 15m' },
+  { id: 4, title: 'รักในโลกเสมือน', year: 2025, price_usdc: 3.5, duration: '1h 55m' },
 ]
 
 export default function HomePage() {
