@@ -6,7 +6,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 const config = createConfig(
   getDefaultConfig({
     appName: 'Arty Movie',
-    projectId: 'arty-movie-project', 
+    projectId: 'arty-movie-project',
     chains: [mainnet],
     transports: {
       [mainnet.id]: http(),

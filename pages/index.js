@@ -29,6 +29,10 @@ export default function HomePage() {
 
   return (
     <div>
+      <button onClick={() => window.location.href='/connectWallet'}>
+  เชื่อมต่อกระเป๋า
+</button>
+
       <Header onNavigate={navigate} user={user} onConnect={connectWallet} />
       <main className="container py-8">
         <section className="mb-6 p-6 rounded-lg bg-gradient-to-r from-indigo-900 via-gray-900 to-black">
@@ -52,6 +56,3 @@ export default function HomePage() {
     </div>
   )
 }
-<button onClick={() => window.location.href='/connectWallet'}>
-  เชื่อมต่อกระเป๋า
-</button>
