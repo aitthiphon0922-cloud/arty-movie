@@ -52,3 +52,6 @@ export default function HomePage() {
     </div>
   )
 }
+<button onClick={() => window.location.href='/connectWallet'}>
+  เชื่อมต่อกระเป๋า
+</button>
