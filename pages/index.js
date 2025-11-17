@@ -1,58 +1,72 @@
-import { useState } from 'react'
-import Header from '../components/Header'
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
-const MOCK_MOVIES = [
-  { id: 1, title: 'Moon Warrior', year: 2025, price_usdc: 3, duration: '1h 48m' },
-  { id: 2, title: 'Lost in Space', year: 2023, price_usdc: 2.5, duration: '2h 01m' },
-  { id: 3, title: 'ล่าข้ามจักรวาล', year: 2024, price_usdc: 4, duration: '2h 15m' },
-  { id: 4, title: 'รักในโลกเสมือน', year: 2025, price_usdc: 3.5, duration: '1h 55m' },
-]
+export default function MintPage() {
+  const [account, setAccount] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-export default function HomePage() {
-  const [route, setRoute] = useState('home')
-  const [user, setUser] = useState(null)
-
-  function navigate(page) {
-    setRoute(page)
-    if (page !== 'home') {
-      // simple navigation: use window.location for pages in this scaffold
-      if (page === 'categories') window.location.href = '/categories'
-      if (page === 'liveapps') window.location.href = '/liveapps'
-      if (page === 'about') window.location.href = '/about'
+  // ฟังก์ชันเชื่อมต่อกระเป๋า
+  const connectWallet = async () => {
+    try {
+      if (!window.ethereum) {
+        alert("ไม่พบกระเป๋า MetaMask บนเบราว์เซอร์");
+        return;
+      }
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setAccount(accounts[0]);
+    } catch (error) {
+      console.error(error);
+      alert("เชื่อมต่อกระเป๋าไม่สำเร็จ");
     }
-  }
+  };
 
-  function connectWallet() {
-    // simulate wallet connect - replace with WalletConnect/MetaMask in real app
-    setUser({ name: 'Arty', address: '0x123456...', addrShort: '0x1234...cdef' })
-  }
+  // ฟังก์ชัน Mint (ตัวอย่าง)
+  const handleMint = async () => {
+    if (!account) {
+      alert("กรุณาเชื่อมต่อกระเป๋าก่อน");
+      return;
+    }
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      alert("Mint สำเร็จแล้ว!");
+    }, 1500);
+  };
 
   return (
-    <div>
-      <button onClick={() => window.location.href='/connectWallet'}>
-  เชื่อมต่อกระเป๋า
-</button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <Card className="w-full max-w-md shadow-xl rounded-2xl">
+        <CardContent className="p-6 space-y-6">
+          <motion.h1
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-2xl font-bold text-center"
+          >
+            Mint NFT
+          </motion.h1>
 
-      <Header onNavigate={navigate} user={user} onConnect={connectWallet} />
-      <main className="container py-8">
-        <section className="mb-6 p-6 rounded-lg bg-gradient-to-r from-indigo-900 via-gray-900 to-black">
-          <h1 className="text-2xl font-bold">หนังแนะนำวันนี้</h1>
-          <p className="text-gray-300 mt-2">จ่ายด้วย USDC / ETH / BTC</p>
-        </section>
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {MOCK_MOVIES.map(m => (
-            <article key={m.id} className="bg-gray-900 p-4 rounded">
-              <div className="h-40 bg-gray-800 flex items-center justify-center">[โปสเตอร์]</div>
-              <h3 className="mt-3 font-semibold">{m.title} <span className="text-sm text-gray-400">({m.year})</span></h3>
-              <p className="text-sm text-gray-400">{m.duration}</p>
-              <div className="mt-3 flex items-center justify-between">
-                <div className="text-sm">{m.price_usdc} USDC</div>
-                <a className="px-3 py-1 bg-blue-600 rounded" href={`/movies/${m.id}`}>ดูรายละเอียด</a>
-              </div>
-            </article>
-          ))}
-        </section>
-      </main>
+          {/* ปุ่มเชื่อมต่อกระเป๋า */}
+          <Button
+            onClick={connectWallet}
+            className="w-full py-3 text-lg rounded-xl"
+          >
+            {account ? `เชื่อมต่อแล้ว: ${account.substring(0, 6)}...` : "เชื่อมต่อกระเป๋า"}
+          </Button>
+
+          {/* ปุ่ม Mint */}
+          <Button
+            onClick={handleMint}
+            className="w-full py-3 text-lg rounded-xl"
+            disabled={loading}
+          >
+            {loading ? "กำลัง Mint..." : "Mint เลย"}
+          </Button>
+        </CardContent>
+      </Card>
     </div>
-  )
+  );
 }
